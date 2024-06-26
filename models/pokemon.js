@@ -15,7 +15,7 @@ const pokemonSchema = new mongoose.Schema({
         speed: { type: Number, required: true },
     },
     spriteUrl: { type: String }, // URL for the Pokémon's image
-});
+}, { collection: 'pokemon' });
 
 // Create model for Pokemon
 export const Pokemon = mongoose.model('Pokemon', pokemonSchema);

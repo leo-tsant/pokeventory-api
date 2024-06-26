@@ -1,0 +1,20 @@
+{
+    "env": {
+        "node": true, // Enable Node.js global variables and Node.js scope
+        "es2021": true // Enable modern ECMAScript features (ES6+)
+    },
+    "extends": [
+        "eslint:recommended", // Enable ESLint's recommended rules
+        "plugin:node/recommended", // Enable Node.js recommended rules
+        "plugin:import/recommended", // Enable import/export best practices
+        "plugin:import/typescript"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2021, // Allow modern ECMAScript features (ES6+)
+        "sourceType": "module" // Enable ES modules
+    },
+    "rules": {
+        // Add your custom rules here if needed
+        "no-console": "off" // Example: Allow console.log for development
+    }
+}
