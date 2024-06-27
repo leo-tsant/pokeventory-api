@@ -71,4 +71,15 @@ const deleteHealingItem = async (req, res) => {
   }
 };
 
-export { getAllHealingItems, getHealingItemByName, updateHealingItemQuantity, deleteHealingItem };
+const addNewHealingItem = async (req, res) => {
+  try {
+    const healingItem = new HealingItem(req.body);
+    const newHealingItem = await healingItem.save();
+
+    res.status(201).json(newHealingItem);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+export { getAllHealingItems, getHealingItemByName, updateHealingItemQuantity, deleteHealingItem, addNewHealingItem };

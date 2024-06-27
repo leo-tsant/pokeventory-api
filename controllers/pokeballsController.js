@@ -70,4 +70,15 @@ const deletePokeball = async (req, res) => {
   }
 }
 
-export { getAllPokeballs, getPokeballByName, updatePokeballQuantity, deletePokeball};
+const addNewPokeball = async (req, res) => {
+  try {
+    const pokeball = new Pokeball(req.body);
+    const newPokeball = await pokeball.save();
+
+    res.status(201).json(newPokeball);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+}
+
+export { getAllPokeballs, getPokeballByName, updatePokeballQuantity, deletePokeball, addNewPokeball};

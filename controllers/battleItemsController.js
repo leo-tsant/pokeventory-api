@@ -71,4 +71,15 @@ const deleteBattleItem = async (req, res) => {
   }
 };
 
-export { getBattleItems, getBattleItemByName, updateBattleItemQuantity, deleteBattleItem };
+const addNewBattleItem = async (req, res) => {
+  try {
+    const battleItem = req.body;
+    const newBattleItem = new BattleItem(battleItem);
+    const savedBattleItem = await newBattleItem.save();
+    res.json(savedBattleItem);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export { getBattleItems, getBattleItemByName, updateBattleItemQuantity, deleteBattleItem, addNewBattleItem };

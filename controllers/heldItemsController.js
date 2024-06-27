@@ -66,4 +66,15 @@ const deleteHeldItem = async (req, res) => {
     }
 }
 
-export { getAllHeldItems, getHeldItemByName, updateHeldItemQuantity, deleteHeldItem};
+const addNewHeldItem = async (req, res) => {
+  try {
+    const heldItem = new HeldItem(req.body);
+    const newHeldItem = await heldItem.save();
+
+    res.status(201).json(newHeldItem);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+export { getAllHeldItems, getHeldItemByName, updateHeldItemQuantity, deleteHeldItem, addNewHeldItem};

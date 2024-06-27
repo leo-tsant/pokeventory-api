@@ -2,7 +2,10 @@ import express from 'express';
 import {
   getAllPokemon,
   getPokemonByPokedexNumber,
-  getPokemonByName, deletePokemonByPokedexNumber, deletePokemonByname
+  getPokemonByName, 
+  deletePokemonByPokedexNumber, 
+  deletePokemonByname,
+  addNewPokemon,
 } from '../controllers/pokemonController.js';
 
 const pokemonRouter = express.Router();
@@ -21,5 +24,8 @@ pokemonRouter.delete('/:pokedexNumber', deletePokemonByPokedexNumber);
 
 // DELETE a Pokémon by name
 pokemonRouter.delete('/name/:name', deletePokemonByname);
+
+// POST request to add a new Pokémon
+pokemonRouter.post('/', addNewPokemon);
 
 export default pokemonRouter;

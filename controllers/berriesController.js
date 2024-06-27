@@ -70,4 +70,15 @@ const deleteBerry = async (req, res) => {
   }
 }
 
-export { getAllBerries, getBerryByName, updateBerryQuantity, deleteBerry };
+const addNewBerry = async (req, res) => {
+  try {
+    const newBerry = new Berry(req.body);
+    const savedBerry = await newBerry.save();
+
+    res.json(savedBerry);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export { getAllBerries, getBerryByName, updateBerryQuantity, deleteBerry, addNewBerry };

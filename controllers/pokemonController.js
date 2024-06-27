@@ -89,4 +89,15 @@ const deletePokemonByname = async (req, res) => {
   }
 }
 
-export { getAllPokemon, getPokemonByPokedexNumber, getPokemonByName, deletePokemonByPokedexNumber, deletePokemonByname };
+const addNewPokemon = async (req, res) => {
+  try {
+    const newPokemon = new Pokemon(req.body); 
+    const savedPokemon = await newPokemon.save(); 
+
+    res.status(201).json(savedPokemon); 
+  } catch (err) {
+    res.status(400).json({ error: err.message }); // 
+  }
+};
+
+export { getAllPokemon, getPokemonByPokedexNumber, getPokemonByName, deletePokemonByPokedexNumber, deletePokemonByname, addNewPokemon };
