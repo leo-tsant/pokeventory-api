@@ -1,4 +1,7 @@
 import { Berry } from '../models/berry.js';
+import config from '../utils/config.js';
+
+const ADMIN_PASSWORD = config.ADMIN_PASSWORD;
 
 const getAllBerries = async (req, res) => {
   try {
@@ -46,4 +49,25 @@ const updateBerryQuantity = async (req, res) => {
   }
 }
 
-export { getAllBerries, getBerryByName, updateBerryQuantity };
+const deleteBerry = async (req, res) => {
+  try {
+    const name = req.params.name;
+    const { adminPassword } = req.body;
+
+    if (adminPassword !== ADMIN_PASSWORD) {
+      return res.status(401).json({ error: 'Incorrect admin password' });
+    }
+
+    const deletedBerry = await Berry.findOneAndDelete({ name });
+
+    if (!deletedBerry) {
+      return res.status(404).json({ message: 'Berry not found' });
+    }
+
+    res.json({ message: 'Berry deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete berry' });
+  }
+}
+
+export { getAllBerries, getBerryByName, updateBerryQuantity, deleteBerry };

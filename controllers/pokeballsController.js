@@ -1,4 +1,7 @@
 import { Pokeball } from '../models/pokeball.js';
+import config from '../utils/config.js';
+
+const ADMIN_PASSWORD = config.ADMIN_PASSWORD;
 
 const getAllPokeballs = async (req, res) => {
   try {
@@ -46,4 +49,25 @@ const updatePokeballQuantity = async (req, res) => {
   }
 }
 
-export { getAllPokeballs, getPokeballByName, updatePokeballQuantity};
+const deletePokeball = async (req, res) => {
+  try {
+    const name = req.params.name;
+    const { adminPassword } = req.body;
+
+    if (adminPassword !== ADMIN_PASSWORD) {
+      return res.status(401).json({ error: 'Incorrect admin password' });
+    }
+
+    const deletedPokeball = await Pokeball.findOneAndDelete({ name });
+
+    if (!deletedPokeball) {
+      return res.status(404).json({ message: 'Pokeball not found' });
+    }
+
+    res.json({ message: 'Pokeball deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete pokeball' });
+  }
+}
+
+export { getAllPokeballs, getPokeballByName, updatePokeballQuantity, deletePokeball};

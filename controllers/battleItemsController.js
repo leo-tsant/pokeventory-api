@@ -1,4 +1,7 @@
 import { BattleItem } from '../models/battleItem.js';
+import config from '../utils/config.js';
+
+const ADMIN_PASSWORD = config.ADMIN_PASSWORD;
 
 const getBattleItems = async (req, res) => {
   try {
@@ -47,4 +50,25 @@ const updateBattleItemQuantity = async (req, res) => {
   }
 }
 
-export { getBattleItems, getBattleItemByName, updateBattleItemQuantity };
+const deleteBattleItem = async (req, res) => {
+  try {
+    const name = req.params.name;
+    const { adminPassword } = req.body;
+
+    if (adminPassword !== ADMIN_PASSWORD) {
+      return res.status(401).json({ error: 'Incorrect admin password' });
+    }
+
+    const deletedBattleItem = await BattleItem.findOneAndDelete({ name });
+
+    if (!deletedBattleItem) {
+      return res.status(404).json({ message: 'Battle item not found' });
+    }
+
+    res.json({ message: 'Battle item deleted successfully' });
+  }catch (error) {
+    res.status(500).json({ error: 'Failed to delete battle item' });
+  }
+};
+
+export { getBattleItems, getBattleItemByName, updateBattleItemQuantity, deleteBattleItem };

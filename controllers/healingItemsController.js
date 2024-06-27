@@ -1,4 +1,7 @@
 import { HealingItem } from '../models/healingItem.js';
+import config from '../utils/config.js';
+
+const ADMIN_PASSWORD = config.ADMIN_PASSWORD;
 
 const getAllHealingItems = async (req, res) => {
   try {
@@ -47,4 +50,25 @@ const updateHealingItemQuantity = async (req, res) => {
   }
 }
 
-export { getAllHealingItems, getHealingItemByName, updateHealingItemQuantity };
+const deleteHealingItem = async (req, res) => {
+  try {
+    const name = req.params.name;
+    const { adminPassword } = req.body;
+
+    if (adminPassword !== ADMIN_PASSWORD) {
+      return res.status(401).json({ error: 'Incorrect admin password' });
+    }
+
+    const deletedHealingItem = await HealingItem.findOneAndDelete({ name });
+
+    if (!deletedHealingItem) {
+      return res.status(404).json({ message: 'Healing item not found' });
+    }
+
+    res.json({ message: 'Healing item deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to healing item' });
+  }
+};
+
+export { getAllHealingItems, getHealingItemByName, updateHealingItemQuantity, deleteHealingItem };
