@@ -6,6 +6,6 @@ const { MONGO_URI } = process.env;
 const { PORT } = process.env;
 
 export default {
-    MONGO_URI,
-    PORT
+  MONGO_URI,
+  PORT,
 };
