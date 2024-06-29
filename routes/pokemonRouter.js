@@ -1,9 +1,10 @@
 import express from 'express';
 import {
   getAllPokemon,
+  getPokemonPage,
   getPokemonByPokedexNumber,
-  getPokemonByName, 
-  deletePokemonByPokedexNumber, 
+  getPokemonByName,
+  deletePokemonByPokedexNumber,
   deletePokemonByname,
   addNewPokemon,
 } from '../controllers/pokemonController.js';
@@ -12,6 +13,9 @@ const pokemonRouter = express.Router();
 
 // GET all Pokémon
 pokemonRouter.get('/', getAllPokemon);
+
+// GET page of Pokémon
+pokemonRouter.get('/page', getPokemonPage);
 
 // GET a single Pokémon by Pokédex number
 pokemonRouter.get('/:pokedexNumber', getPokemonByPokedexNumber);
