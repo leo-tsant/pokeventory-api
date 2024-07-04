@@ -15,6 +15,7 @@ const pokemonSchema = new mongoose.Schema(
       specialDefense: { type: Number, required: true },
       speed: { type: Number, required: true },
     },
+    cryUrl: { type: String },
     spriteUrl: { type: String }, // URL for the Pokémon's image
   },
   { collection: 'pokemon' },

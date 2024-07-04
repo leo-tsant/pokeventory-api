@@ -36,6 +36,7 @@ const fetchPokemonData = async () => {
           specialDefense: pokemonDetails.stats[4]?.base_stat || 0,
           speed: pokemonDetails.stats[5]?.base_stat || 0,
         },
+        cryUrl: pokemonDetails.cries.latest || null,
         spriteUrl:
           pokemonDetails.sprites.front_default ||
           'https://via.placeholder.com/150',
