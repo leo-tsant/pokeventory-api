@@ -10,6 +10,7 @@ import battleItemsRouter from './routes/battleItemsRouter.js';
 import healingItemsRouter from './routes/healingItemsRouter.js';
 import heldItemsRouter from './routes/heldItemsRouter.js';
 import pokeballsRouter from './routes/pokeballsRouter.js';
+import allItemsRouter from './routes/allItemsRouter.js';
 
 const app = express();
 const PORT = config.PORT || 5000;
@@ -39,6 +40,7 @@ app.use('/api/battle-items', battleItemsRouter);
 app.use('/api/healing-items', healingItemsRouter);
 app.use('/api/held-items', heldItemsRouter);
 app.use('/api/pokeballs', pokeballsRouter);
+app.use('/api/all-items', allItemsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
