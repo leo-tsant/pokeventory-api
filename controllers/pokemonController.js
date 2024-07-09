@@ -1,5 +1,6 @@
 import { Pokemon } from '../models/pokemon.js';
 import config from '../utils/config.js';
+import axios from 'axios';
 
 const ADMIN_PASSWORD = config.ADMIN_PASSWORD;
 
@@ -109,12 +110,43 @@ const deletePokemonByname = async (req, res) => {
 
 const addNewPokemon = async (req, res) => {
   try {
-    const newPokemon = new Pokemon(req.body);
-    const savedPokemon = await newPokemon.save();
+    const { name } = req.params;
 
-    res.status(201).json(savedPokemon);
-  } catch (err) {
-    res.status(400).json({ error: err.message }); // 
+    // Fetch data from PokeAPI
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
+    const pokemonDetails = response.data;
+
+    // Create a new Pokémon instance with the fetched data
+    const pokemonInstance = new Pokemon({
+      name: pokemonDetails.name || 'Unknown',
+      pokedexNumber: pokemonDetails.id || 0,
+      primaryType: pokemonDetails.types[0]?.type.name || 'Unknown',
+      secondaryType: pokemonDetails.types[1]?.type.name || undefined,
+      baseStats: {
+        hp: pokemonDetails.stats[0]?.base_stat || 0,
+        attack: pokemonDetails.stats[1]?.base_stat || 0,
+        defense: pokemonDetails.stats[2]?.base_stat || 0,
+        specialAttack: pokemonDetails.stats[3]?.base_stat || 0,
+        specialDefense: pokemonDetails.stats[4]?.base_stat || 0,
+        speed: pokemonDetails.stats[5]?.base_stat || 0,
+      },
+      cryUrl: pokemonDetails.cries.latest || null,
+      spriteUrl: pokemonDetails.sprites.front_default || 'https://via.placeholder.com/150',
+      canBeDeleted: true,
+    });
+
+    // Save to database
+    await pokemonInstance.save();
+
+    res.status(201).json(pokemonInstance);
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      res.status(404).json({ error: 'Pokémon not found' });
+    } else if (error.code === 11000) { // Duplicate key error
+      res.status(400).json({ error: 'Pokémon already exists in the database' });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
   }
 };
 

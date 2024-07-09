@@ -17,6 +17,7 @@ const pokemonSchema = new mongoose.Schema(
     },
     cryUrl: { type: String },
     spriteUrl: { type: String }, // URL for the Pokémon's image
+    canBeDeleted: { type: Boolean, default: false },
   },
   { collection: 'pokemon' },
 );

@@ -24,12 +24,12 @@ pokemonRouter.get('/:pokedexNumber', getPokemonByPokedexNumber);
 pokemonRouter.get('/name/:name', getPokemonByName);
 
 // DELETE a Pokémon by Pokédex number
-pokemonRouter.delete('/:pokedexNumber', deletePokemonByPokedexNumber);
+pokemonRouter.delete('/delete/:pokedexNumber', deletePokemonByPokedexNumber);
 
 // DELETE a Pokémon by name
-pokemonRouter.delete('/name/:name', deletePokemonByname);
+pokemonRouter.delete('/delete/:name', deletePokemonByname);
 
 // POST request to add a new Pokémon
-pokemonRouter.post('/', addNewPokemon);
+pokemonRouter.post('/add/:name', addNewPokemon);
 
 export default pokemonRouter;
