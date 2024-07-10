@@ -10,7 +10,7 @@ import config from './utils/config.js'; // Assuming your config file is in the '
 const fetchPokemonData = async () => {
   // Fetch Generation 1 Pokémon data from PokéAPI
   const response = await axios.get(
-    'https://pokeapi.co/api/v2/pokemon?limit=151',
+    'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151',
   );
   const data = response.data.results;
 

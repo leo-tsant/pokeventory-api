@@ -5,7 +5,7 @@ import {
   getPokemonByPokedexNumber,
   getPokemonByName,
   deletePokemonByPokedexNumber,
-  deletePokemonByname,
+  deletePokemonByName,
   addNewPokemon,
 } from '../controllers/pokemonController.js';
 
@@ -27,7 +27,7 @@ pokemonRouter.get('/name/:name', getPokemonByName);
 pokemonRouter.delete('/delete/:pokedexNumber', deletePokemonByPokedexNumber);
 
 // DELETE a Pokémon by name
-pokemonRouter.delete('/delete/:name', deletePokemonByname);
+pokemonRouter.delete('/delete/:name', deletePokemonByName);
 
 // POST request to add a new Pokémon
 pokemonRouter.post('/add/:name', addNewPokemon);
